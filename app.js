@@ -2,12 +2,19 @@ const express = require('express');
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+const bookRouter=require('./routes/book.js')
+app.use('/book', bookRouter);
+
 app.get('/t1', function(request, response) {
     console.log("Testi");
     response.send("Testi1");
 });
 
-app.get('/t2', function(request, response) {
+
+app.get('/t2', function(request, response){
     console.log("Testi2");
     response.send("Testi2");
 });
@@ -36,6 +43,12 @@ app.get('/t4/:fname?', function(request, response) {
         response.send("Terve tuntematon");
     }
 });
+
+app.post('/t1', function(request, response){
+    console.log("Post test");
+    response.send(request.body);
+});
+
 
 let port = 3000;
 app.listen(port, function(err) {
